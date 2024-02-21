@@ -6,35 +6,73 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform[] TargetPoints;
+    public List<Transform> TargetPoints;
     private NavMeshAgent _navMeshAgent;
-    private bool _goToTargetPoint = false;
-    
-    // Start is called before the first frame update
+    public PlayerController player;
+    private bool _isPlayerNoticed;
+    public float viewAngle;
+
+
+
     void Start()
+    {
+        InitComponentLinks();
+        GoToRaandomTargetPoint();
+    }
+
+
+    void Update()
+    {
+        NoticePlayerUpdate();
+        ChaseUpdate();
+        PatrolUpdate();
+    }
+
+
+    private void GoToRaandomTargetPoint()
+    {
+        _navMeshAgent.destination = TargetPoints[Random.Range(0, TargetPoints.Count)].position;
+    }
+
+
+    private void PatrolUpdate()
+    {
+        if (_navMeshAgent.remainingDistance == 0 && !_isPlayerNoticed)
+        {
+            GoToRaandomTargetPoint();
+        }
+    }
+
+
+    private void InitComponentLinks()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void NoticePlayerUpdate()
     {
-        if (!_goToTargetPoint)
+        var direction = player.transform.position - transform.position;
+        _isPlayerNoticed = false;
+        if (Vector3.Angle(transform.forward, direction) < viewAngle)
         {
-            GoToRandomTargetPoint();
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position + Vector3.up, direction, out hit))
+            {
+                if (hit.collider.gameObject == player.gameObject)
+                {
+                    _isPlayerNoticed = true;
+                }
+            }
         }
     }
-    void GoToRandomTargetPoint()
+
+
+    private void ChaseUpdate()
     {
-        _goToTargetPoint = true;
-        int i = Random.Range(0, TargetPoints.Length);
-        _navMeshAgent.destination = TargetPoints[i].position;
-        while (_goToTargetPoint)
+        if (_isPlayerNoticed)
         {
-            if (Mathf.Abs(transform.position.x - TargetPoints[i].position.x) < 0.1 && Mathf.Abs(transform.position.z - TargetPoints[i].position.z) < 0.1)
-            {
-                _goToTargetPoint = false;
-            }
+            _navMeshAgent.destination = player.transform.position;
         }
     }
 }
