@@ -407,6 +407,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1957556940745398459, guid: 95d942722dcd73545b9f1ef1fbdf6f74,
+        type: 3}
+      propertyPath: BulletPrefab
+      value: 
+      objectReference: {fileID: 1723042730, guid: ae4c6fd61ea255f4bbd97e1f07df62aa,
+        type: 3}
     - target: {fileID: 5537953365368462921, guid: 95d942722dcd73545b9f1ef1fbdf6f74,
         type: 3}
       propertyPath: m_Name
@@ -1984,6 +1990,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483809382728765205, guid: 735520d0b3a09d84ca300427f7cae997,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4483809382728765206, guid: 735520d0b3a09d84ca300427f7cae997,
         type: 3}

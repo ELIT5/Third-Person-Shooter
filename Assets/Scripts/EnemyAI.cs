@@ -28,7 +28,6 @@ public class EnemyAI : MonoBehaviour
         PatrolUpdate();
     }
 
-
     private void GoToRaandomTargetPoint()
     {
         _navMeshAgent.destination = TargetPoints[Random.Range(0, TargetPoints.Count)].position;
