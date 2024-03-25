@@ -15,8 +15,12 @@ public class EnemyAI : MonoBehaviour
     public float damage = 30;
     private PlayerHealth playerHealth;
     public GameObject enemy;
+    private EnemyHealth _enemyHealth;
 
-
+    public bool IsAlive()
+    {
+        return _enemyHealth.IsAlive();
+    }
 
     void Start()
     {
@@ -24,6 +28,7 @@ public class EnemyAI : MonoBehaviour
         GoToRaandomTargetPoint();
         playerHealth = player.GetComponent<PlayerHealth>();
         _anim = enemy.GetComponent<Animator>();
+        _enemyHealth = GetComponent<EnemyHealth>();
     }
 
 

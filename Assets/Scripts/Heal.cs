@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class Heal : MonoBehaviour
 {
-    public GameObject player;
     private PlayerHealth _playerHealth;
     public float heal;
-    public GameObject healGameObject;
+    public GameObject apple;
     void Start()
     {
-        _playerHealth = player.GetComponent<PlayerHealth>();
+        _playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     void Update()
     {
-        transform.Rotate(0, 1f, 0);
+        apple.transform.Rotate(0, 1f, 0);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player && _playerHealth.playerHealth < _playerHealth.maxPlayerHealth)
+        var playerHealth = other.GetComponent<PlayerHealth>();
+        if (playerHealth != null && _playerHealth.playerHealth < _playerHealth.maxPlayerHealth)
         {
             _playerHealth.AddHealth(heal);
-            Destroy(healGameObject);
+            Destroy(gameObject);
         }
     }
 

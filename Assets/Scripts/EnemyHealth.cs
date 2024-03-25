@@ -8,6 +8,10 @@ public class EnemyHealth : MonoBehaviour
     public float enemyHealth;
     private EnemyAnimationController _anim;
 
+    public bool IsAlive()
+    {
+        return enemyHealth  > 0;
+    }
     private void Start()
     {
         _anim = FindObjectOfType<EnemyAnimationController>();
