@@ -7,12 +7,14 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public List<Transform> TargetPoints;
-    private NavMeshAgent _navMeshAgent;
+    public NavMeshAgent navMeshAgent;
     public PlayerController player;
-    private bool _isPlayerNoticed;
+    public bool isPlayerNoticed;
     public float viewAngle;
+    private Animator _anim;
     public float damage = 30;
     private PlayerHealth playerHealth;
+    public GameObject enemy;
 
 
 
@@ -21,6 +23,7 @@ public class EnemyAI : MonoBehaviour
         InitComponentLinks();
         GoToRaandomTargetPoint();
         playerHealth = player.GetComponent<PlayerHealth>();
+        _anim = enemy.GetComponent<Animator>();
     }
 
 
@@ -31,23 +34,29 @@ public class EnemyAI : MonoBehaviour
         AttackUpdate();
         PatrolUpdate();
     }
-    private void AttackUpdate()
+     public void AttackUpdate()
     {
-        if (_isPlayerNoticed && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+        if (isPlayerNoticed && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            playerHealth.DealDamage(damage);
+            _anim.SetTrigger("Attack");
         }
+    }
+
+    public void Attack()
+    {
+        playerHealth.DealDamage(damage);
     }
 
     private void GoToRaandomTargetPoint()
     {
-        _navMeshAgent.destination = TargetPoints[Random.Range(0, TargetPoints.Count)].position;
+        navMeshAgent.destination = TargetPoints[Random.Range(0, TargetPoints.Count)].position;
+        navMeshAgent.stoppingDistance = 0;
     }
 
 
     private void PatrolUpdate()
     {
-        if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance && !_isPlayerNoticed)
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !isPlayerNoticed)
         {
             GoToRaandomTargetPoint();
         }
@@ -56,14 +65,14 @@ public class EnemyAI : MonoBehaviour
 
     private void InitComponentLinks()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
 
     private void NoticePlayerUpdate()
     {
         var direction = player.transform.position - transform.position;
-        _isPlayerNoticed = false;
+        isPlayerNoticed = false;
         if (Vector3.Angle(transform.forward, direction) < viewAngle)
         {
             RaycastHit hit;
@@ -71,19 +80,19 @@ public class EnemyAI : MonoBehaviour
             {
                 if (hit.collider.gameObject == player.gameObject)
                 {
-                    _isPlayerNoticed = true;
+                    isPlayerNoticed = true;
                 }
             }
         }
     }
 
 
-    private void ChaseUpdate()
+    public void ChaseUpdate()
     {
-        if (_isPlayerNoticed)
+        if (isPlayerNoticed)
         {
-            _navMeshAgent.destination = player.transform.position;
-            _navMeshAgent.stoppingDistance = 2f;
+            navMeshAgent.destination = player.transform.position;
+            navMeshAgent.stoppingDistance = 2;
         }
     }
 }

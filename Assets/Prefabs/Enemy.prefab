@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &3850482348111879120
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3672924302439715950}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 64c536deeec2466479f392518b1a787a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2106970301177339034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3672924302439715950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9614cf05381514c8442d8f6f6e0867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAI: {fileID: 4483809382728765204}
 --- !u!1 &4483809382728765205
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,9 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetPoints: []
+  navMeshAgent: {fileID: 4483809382728765207}
   player: {fileID: 0}
+  isPlayerNoticed: 0
   viewAngle: 90
-  EnemyHealth: 0
+  damage: 30
+  enemy: {fileID: 3672924302439715950}
 --- !u!114 &110248503896158074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c65778d6a1823842af6a2196c1ff32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemy: {fileID: 4483809382728765205}
+  enemyHealth: 100
 --- !u!1001 &4483809382456142143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -153,6 +190,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8a653232b3df3847834d31402aef32d, type: 3}
+--- !u!1 &3672924302439715950 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8a653232b3df3847834d31402aef32d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4483809382456142143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4157677455057997524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b8a653232b3df3847834d31402aef32d,

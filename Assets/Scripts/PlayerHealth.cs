@@ -6,37 +6,39 @@ public class PlayerHealth : MonoBehaviour
 {
     // Start is called before the first frame update
     public float playerHealth = 100;
-    private float _maxPlayerHealth;
+    public float maxPlayerHealth;
     public RectTransform healthBar;
-    public GameObject gameOverScreen;
-    public GameObject gameplayUI;
+
+    public PlayerAnimationController anim;
+
 
     private void Start()
     {
-        _maxPlayerHealth = playerHealth;
+        maxPlayerHealth = playerHealth;
         DrawHealthBar();
     }
 
+
+
     public void DealDamage(float damage)
     {
-        playerHealth -= damage * Time.deltaTime;
+        playerHealth -= damage;
         if (playerHealth <= 0)
         {
-            Death();
+            anim.Death();
         }
         DrawHealthBar();
     }
-    private void Death()
+
+    public void AddHealth(float amount)
     {
-        gameOverScreen.SetActive(true);
-        gameplayUI.SetActive(false);
-        GetComponent<PlayerController>().enabled = false;
-        GetComponent<BulletCaster>().enabled = false;
-        GetComponent<CameraRotation>().enabled = false;
+        playerHealth += amount;
+        playerHealth = Mathf.Clamp(playerHealth, 0, maxPlayerHealth);
+        DrawHealthBar();
     }
 
     private void DrawHealthBar()
     {
-        healthBar.anchorMax = new Vector2(playerHealth / _maxPlayerHealth, 1);
+        healthBar.anchorMax = new Vector2(playerHealth / maxPlayerHealth, 1);
     }
 }

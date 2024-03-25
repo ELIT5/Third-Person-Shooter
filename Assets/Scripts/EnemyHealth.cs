@@ -6,21 +6,24 @@ public class EnemyHealth : MonoBehaviour
 {
     public GameObject Enemy;
     public float enemyHealth;
+    private EnemyAnimationController _anim;
+
+    private void Start()
+    {
+        _anim = FindObjectOfType<EnemyAnimationController>();
+    }
+
 
     private void Update()
     {
         if (enemyHealth <= 0)
         {
-            Death();
+            _anim.Death();
         }
     }
     public void TakeDamage(float damage)
     {
         enemyHealth -= damage;
-    }
-
-    void Death()
-    {
-            Destroy(Enemy);
+        _anim.Hit();
     }
 }
