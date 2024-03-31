@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class BulletCaster : MonoBehaviour
 {
-    public Bullet BulletPrefab;
-    public Transform BulletSource;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Bullet bulletPrefab;
+    public Transform bulletSource;
+    public AudioSource shoot;
+
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(BulletPrefab, BulletSource.transform.position, BulletSource.transform.rotation);
+            Instantiate(bulletPrefab, bulletSource.transform.position, bulletSource.transform.rotation);
+            shoot.Play();
         }
     }
 }

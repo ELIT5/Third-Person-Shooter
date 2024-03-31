@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     public RectTransform healthBar;
 
     public PlayerAnimationController anim;
+    public GameObject automate;
 
 
     private void Start()
@@ -26,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
         if (playerHealth <= 0)
         {
             anim.Death();
+            Destroy(automate);
         }
         DrawHealthBar();
     }
